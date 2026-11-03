@@ -1,0 +1,25 @@
+/* Each allocation is one accounting row; keep its three fields together. */
+.allocation-details {
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.allocation-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.85fr) minmax(110px, 0.9fr);
+  gap: 8px;
+  margin-top: 8px;
+  min-width: 0;
+}
+
+.allocation-row + .allocation-row {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+@container (max-width: 390px) {
+  .allocation-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

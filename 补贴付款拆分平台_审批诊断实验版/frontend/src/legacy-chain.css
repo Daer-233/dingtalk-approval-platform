@@ -1,0 +1,22 @@
+/* Uses the existing theme tokens; no business-control redesign. */
+.legacy-chain { margin-top: 18px; padding: 18px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; min-width: 0; }
+.legacy-chain-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--ink); }
+.legacy-chain-heading > span { margin-left: auto; font-size: 12px; color: var(--muted); }
+.legacy-chain-heading svg, .legacy-chain-warning svg { flex: 0 0 auto; }
+.legacy-chain-warning { display: flex; align-items: flex-start; gap: 8px; margin: 14px 0; padding: 12px; background: var(--orange-soft); color: var(--orange); border-radius: 9px; font-size: 13px; line-height: 1.75; overflow-wrap: anywhere; }
+.legacy-chain-warning svg { margin-top: 3px; }
+.legacy-chain-list { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 8px; }
+.legacy-chain-list li { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); min-width: 0; }
+.legacy-chain-number { flex: 0 0 26px; height: 26px; display: grid; place-items: center; border-radius: 8px; font-size: 12px; color: var(--accent); background: var(--accent-soft); }
+.legacy-chain-content { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.legacy-chain-title { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.legacy-chain-title strong { font-size: 14px; }
+.legacy-chain-title small, .legacy-chain-content > small { color: var(--muted); font-size: 12px; }
+.legacy-chain-content p { margin: 7px 0 0; color: var(--ink); font-size: 14px; line-height: 1.7; white-space: normal; }
+.legacy-chain-skipped { opacity: .75; }
+.legacy-chain-cc { margin: 12px 0 0; font-size: 12px; color: var(--muted); line-height: 1.7; }
+.legacy-confirm-notice { padding: 14px; margin: 14px 0; border: 1px solid var(--line); border-radius: 12px; text-align: left; background: var(--surface-2); }
+.legacy-confirm-notice > p { margin: 0 0 12px; color: var(--orange); font-size: 13px; line-height: 1.75; }
+.legacy-confirm-check { display: flex; align-items: flex-start; gap: 10px; color: var(--ink); font-size: 13px; line-height: 1.75; cursor: pointer; }
+.legacy-confirm-check input { flex: 0 0 auto; margin: 5px 0 0; width: 16px; height: 16px; accent-color: var(--accent); }
+@media (max-width: 600px) { .legacy-chain { padding: 12px; } .legacy-chain-list li { padding: 10px; gap: 8px; } .legacy-chain-heading > span { width: 100%; margin-left: 26px; } .legacy-confirm-notice { padding: 12px; } }

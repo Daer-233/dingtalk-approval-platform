@@ -1,0 +1,12 @@
+.venv/
+.cache/
+output/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.db
+*.sqlite*
+requests.local/
