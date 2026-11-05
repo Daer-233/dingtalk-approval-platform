@@ -1,18 +1,47 @@
-# 钉钉审批与付款拆分项目
+# 钉钉审批平台 · 只读诊断实验版（diagnostic）
 
-本仓库收录同一审批流程的主平台、诊断实验和 Python SDK 验证工具。三个目录对应独立运行入口，配置和数据应按版本分别准备。
+用于钉钉查询、流程预览和诊断，保留隔离的前后端入口与原有操作限制。
 
-| 目录 | 适用场景 | 入口 |
-| --- | --- | --- |
-| [钉钉审批平台](dingtalk-approval-platform/README.md) | 付款拆分和钉钉审批的主要应用 | [局域网启动脚本](dingtalk-approval-platform/启动局域网服务.bat) |
-| [审批诊断实验版](补贴付款拆分平台_审批诊断实验版/README.md) | 在隔离环境中排查审批配置和诊断流程 | [实验版启动脚本](补贴付款拆分平台_审批诊断实验版/启动审批诊断实验版.bat) |
-| [Python SDK 测试版](补贴付款拆分平台_SDK测试版/README.md) | 比对 SDK 请求序列化，预览请求或显式执行测试 | [安装脚本](补贴付款拆分平台_SDK测试版/setup.ps1)、[命令入口](补贴付款拆分平台_SDK测试版/run.ps1) |
+## 版本分支
 
-## 本地使用
+默认分支为 `main`。各分支的项目文件位于仓库根目录。
 
-1. 在 Windows 上准备对应版本的 Python 环境。带 Web 前端的版本还需要 Node.js 和 npm。
-2. 进入选中的项目目录，按子项目文档安装依赖。主平台的后端依赖由 `requirements.txt` 管理，前端可在 `frontend` 中运行 `npm ci`。
-3. 按项目的 `.env.example` 准备本地配置。SDK 工具需要通过 `--env-file` 显式指定配置文件。
-4. 使用该目录自己的启动入口。联调时先验证测试模板、流程预测和请求预览，再按该版本说明启用实际审批提交。
+| 分支 | 版本 |
+| --- | --- |
+| [main](https://github.com/Daer-233/dingtalk-approval-platform/tree/main) | 旧接口版 |
+| [modern](https://github.com/Daer-233/dingtalk-approval-platform/tree/modern) | 新接口版 |
+| [diagnostic](https://github.com/Daer-233/dingtalk-approval-platform/tree/diagnostic) | 只读诊断实验版 |
+| [sdk-test](https://github.com/Daer-233/dingtalk-approval-platform/tree/sdk-test) | Python SDK 测试版 |
 
-业务数据库、付款表、附件和企业凭据应从有权访问的原始交付资料恢复，或用测试资料初始化。各版本的部署边界见 [上传说明](GITHUB_UPLOAD_NOTES.md)。
+## 从仓库根目录运行
+
+按下文和项目的 `.env.example` 配置本地环境。网页前端位于 [frontend](frontend/)，在该目录安装依赖并运行 `npm ci`、`npm run build` 验证构建。启动入口为 `启动局域网服务.bat`，前端使用 5175 端口，后端使用 8012 端口。Python 依赖见 [requirements.txt](requirements.txt)。
+
+实验版也提供 `启动审批诊断实验版.bat`，详细步骤见 [实验版使用说明](实验版使用说明.md)。
+
+本副本只做钉钉查询和本地诊断，上传、创建及审批操作在发送前被阻止。前端 5175，后端 8012。
+
+请阅读 [实验版使用说明](实验版使用说明.md) 和 [验收结果](验收结果.md)。双击 `启动审批诊断实验版.bat` 运行。
+
+其他源版本说明中涉及正式提交的内容不适用于本实验版。
+
+## 开源依赖与来源
+
+### 实际使用
+
+- [FastAPI](https://github.com/fastapi/fastapi)：提供后端 HTTP API。
+- [Uvicorn](https://github.com/encode/uvicorn)：运行 ASGI 服务。
+- [python-multipart](https://github.com/Kludex/python-multipart)：处理表单文件上传。
+- [openpyxl](https://pypi.org/project/openpyxl/)：读取 Excel 工作簿并生成拆分结果。
+- [odfpy](https://github.com/eea/odfpy)：读取 OpenDocument 表格。
+- [numbers-parser](https://pypi.org/project/numbers-parser/)：读取 Apple Numbers 表格。
+- [pywin32](https://github.com/mhammond/pywin32)：调用 Windows COM 和自动化接口。
+- [HTTPX](https://github.com/encode/httpx)：发起 HTTP 请求及测试接口。
+- [python-dotenv](https://github.com/theskumar/python-dotenv)：加载本地环境文件。
+- [React / React DOM](https://github.com/facebook/react)：渲染 Web 界面。
+- [Vite](https://github.com/vitejs/vite)：本地开发与前端构建。
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react)：为 Vite 提供 React 编译支持。
+- [Lucide](https://github.com/lucide-icons/lucide)：提供界面图标。
+## 版本来源
+
+代码提取自 `Daer-233/dingtalk-approval-platform` 的 `补贴付款拆分平台_审批诊断实验版` 目录，固定提交为 `4b618d810467355b65386f1e72da7342392db76f`。迁移前的完整目录结构保存在归档标签 [`archive/pre-version-split-20261105-4b618d810467`](https://github.com/Daer-233/dingtalk-approval-platform/tree/archive/pre-version-split-20261105-4b618d810467)。交付资料与本地配置范围见 [上传说明](GITHUB_UPLOAD_NOTES.md)。
