@@ -1,18 +1,57 @@
-# 钉钉审批与付款拆分项目
+# 钉钉审批平台 · 新接口版（modern）
 
-本仓库收录同一审批流程的主平台、诊断实验和 Python SDK 验证工具。三个目录对应独立运行入口，配置和数据应按版本分别准备。
+使用钉钉新版 Workflow 接口创建审批，包含该版本的网页前端、后端及测试。
 
-| 目录 | 适用场景 | 入口 |
-| --- | --- | --- |
-| [钉钉审批平台](dingtalk-approval-platform/README.md) | 付款拆分和钉钉审批的主要应用 | [局域网启动脚本](dingtalk-approval-platform/启动局域网服务.bat) |
-| [审批诊断实验版](补贴付款拆分平台_审批诊断实验版/README.md) | 在隔离环境中排查审批配置和诊断流程 | [实验版启动脚本](补贴付款拆分平台_审批诊断实验版/启动审批诊断实验版.bat) |
-| [Python SDK 测试版](补贴付款拆分平台_SDK测试版/README.md) | 比对 SDK 请求序列化，预览请求或显式执行测试 | [安装脚本](补贴付款拆分平台_SDK测试版/setup.ps1)、[命令入口](补贴付款拆分平台_SDK测试版/run.ps1) |
+## 版本分支
 
-## 本地使用
+默认分支为 `main`。各分支的项目文件位于仓库根目录。
 
-1. 在 Windows 上准备对应版本的 Python 环境。带 Web 前端的版本还需要 Node.js 和 npm。
-2. 进入选中的项目目录，按子项目文档安装依赖。主平台的后端依赖由 `requirements.txt` 管理，前端可在 `frontend` 中运行 `npm ci`。
-3. 按项目的 `.env.example` 准备本地配置。SDK 工具需要通过 `--env-file` 显式指定配置文件。
-4. 使用该目录自己的启动入口。联调时先验证测试模板、流程预测和请求预览，再按该版本说明启用实际审批提交。
+| 分支 | 版本 |
+| --- | --- |
+| [main](https://github.com/Daer-233/dingtalk-approval-platform/tree/main) | 旧接口版 |
+| [modern](https://github.com/Daer-233/dingtalk-approval-platform/tree/modern) | 新接口版 |
+| [diagnostic](https://github.com/Daer-233/dingtalk-approval-platform/tree/diagnostic) | 只读诊断实验版 |
+| [sdk-test](https://github.com/Daer-233/dingtalk-approval-platform/tree/sdk-test) | Python SDK 测试版 |
 
-业务数据库、付款表、附件和企业凭据应从有权访问的原始交付资料恢复，或用测试资料初始化。各版本的部署边界见 [上传说明](GITHUB_UPLOAD_NOTES.md)。
+## 从仓库根目录运行
+
+按下文和项目的 `.env.example` 配置本地环境。网页前端位于 [frontend](frontend/)，在该目录安装依赖并运行 `npm ci`、`npm run build` 验证构建。启动入口为 `启动局域网服务.bat`，前端使用 5174 端口，后端使用 8011 端口。Python 依赖见 [requirements.txt](requirements.txt)。
+
+这是对应本地版本的脱敏源码快照。仓库默认分支 `main` 为新接口平台；`legacy` 为旧接口平台；`diagnostic` 为只读诊断实验版；`sdk-test` 为独立 Tea SDK 测试工具。
+
+## 安装
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+Copy-Item .env.example .env
+cd frontend
+npm ci
+```
+
+在本地 `.env` 中填写企业配置。业务数据库、付款资料、附件和历史任务未上传，需要在本地初始化并配置。具体运行入口见本分支使用说明和启动脚本。诊断版保留只读隔离；其他版本的正式提交由原有开关控制。
+
+历史单次真实创建脚本仅作为源码参考，包含脱敏占位 ID，不能直接用于真实提交。不要通过运行测试脚本猜测或替换企业配置。
+
+本仓库不保存密钥、token、真实数据库、付款附件、原始诊断输出、依赖环境或缓存。使用 SDK 测试工具时，所有缓存由其 G 盘启动脚本管理。
+
+## 开源依赖与来源
+
+### 实际使用
+
+- [FastAPI](https://github.com/fastapi/fastapi)：提供后端 HTTP API。
+- [Uvicorn](https://github.com/encode/uvicorn)：运行 ASGI 服务。
+- [python-multipart](https://github.com/Kludex/python-multipart)：处理表单文件上传。
+- [openpyxl](https://pypi.org/project/openpyxl/)：读取 Excel 工作簿并生成拆分结果。
+- [odfpy](https://github.com/eea/odfpy)：读取 OpenDocument 表格。
+- [numbers-parser](https://pypi.org/project/numbers-parser/)：读取 Apple Numbers 表格。
+- [pywin32](https://github.com/mhammond/pywin32)：调用 Windows COM 和自动化接口。
+- [HTTPX](https://github.com/encode/httpx)：发起 HTTP 请求及测试接口。
+- [python-dotenv](https://github.com/theskumar/python-dotenv)：加载本地环境文件。
+- [React / React DOM](https://github.com/facebook/react)：渲染 Web 界面。
+- [Vite](https://github.com/vitejs/vite)：本地开发与前端构建。
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react)：为 Vite 提供 React 编译支持。
+- [Lucide](https://github.com/lucide-icons/lucide)：提供界面图标。
+## 版本来源
+
+代码提取自 `Daer-233/dingtalk-approval-platform` 的 `dingtalk-approval-platform` 目录，固定提交为 `4b618d810467355b65386f1e72da7342392db76f`。迁移前的完整目录结构保存在归档标签 [`archive/pre-version-split-20261105-4b618d810467`](https://github.com/Daer-233/dingtalk-approval-platform/tree/archive/pre-version-split-20261105-4b618d810467)。交付资料与本地配置范围见 [上传说明](GITHUB_UPLOAD_NOTES.md)。
