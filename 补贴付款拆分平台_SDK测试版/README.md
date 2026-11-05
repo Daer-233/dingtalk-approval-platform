@@ -52,3 +52,11 @@
 ## 各版本
 
 GitHub 默认 `main` 为现有新接口平台，`legacy` 为旧接口平台，`diagnostic` 为只读诊断实验版，`sdk-test` 为本独立工具。版本间不自动合并。
+
+## 开源依赖与来源
+
+### 实际使用
+
+- [alibabacloud-dingtalk](https://pypi.org/project/alibabacloud-dingtalk/)：提供钉钉接口的 Python SDK。
+- [python-dotenv](https://github.com/theskumar/python-dotenv)：加载本地环境文件。
+- [pytest](https://github.com/pytest-dev/pytest)：运行 Python 自动化测试。
