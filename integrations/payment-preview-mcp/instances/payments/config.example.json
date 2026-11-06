@@ -1,0 +1,13 @@
+{
+  "enabled": false,
+  "generation": 0,
+  "pilot_staff_id": "",
+  "corp_id": "",
+  "bot_id": "9777ca2e-7df1-4441-84ca-abedd4bc5c01",
+  "processor_ids": ["46b1174d-a808-46e3-ace9-ce34432803db", "bc961801-ec74-41c9-ad71-61785aa3d39c"],
+  "host_secret": "",
+  "backend_url": "http://127.0.0.1:8000",
+  "web_url": "",
+  "max_bytes": 20971520,
+  "backend_timeout": 120
+}
